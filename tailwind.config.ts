@@ -71,6 +71,9 @@ export default {
           "gold-muted": "hsl(var(--warm-gold-muted))",
         },
         success: "hsl(var(--success))",
+        electric: "hsl(var(--electric-blue))",
+        gunmetal: "hsl(var(--gunmetal))",
+        steel: "hsl(var(--steel))",
       },
       borderRadius: {
         lg: "var(--radius)",

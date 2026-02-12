@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowRight, BarChart3, Shield, TrendingUp, Globe } from "lucide-react";
+import { ArrowRight, BarChart3, Shield, TrendingUp, Globe, Crosshair } from "lucide-react";
 
 const floatingChars = [
   { char: "₿", x: "8%", y: "15%", size: "text-6xl", delay: 0, duration: 10 },
@@ -17,19 +17,31 @@ const floatingChars = [
 const HeroSection = () => {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
-      <div className="absolute inset-0 bg-grid-subtle" />
+      {/* Animated grid overlay */}
+      <div className="absolute inset-0 animated-grid" />
       <div className="absolute inset-0 bg-radial-warm" />
 
-      {/* Floating characters behind the headline */}
+      {/* HUD scanning line */}
+      <div className="hud-scan-line" />
+
+      {/* Radar pulses */}
+      <div className="absolute top-1/4 left-1/4">
+        <div className="radar-sweep" />
+      </div>
+      <div className="absolute bottom-1/3 right-1/4">
+        <div className="radar-sweep" style={{ animationDelay: "1.5s" }} />
+      </div>
+
+      {/* Floating characters */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {floatingChars.map((item, i) => (
           <motion.span
             key={i}
-            className={`absolute ${item.size} font-mono text-primary/[0.06] select-none`}
+            className={`absolute ${item.size} font-mono text-primary/[0.05] select-none`}
             style={{ left: item.x, top: item.y }}
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{
-              opacity: [0.04, 0.12, 0.04],
+              opacity: [0.03, 0.1, 0.03],
               scale: [0.8, 1.1, 0.8],
               y: [0, -30, 0],
               rotate: [0, 10, -10, 0],
@@ -48,13 +60,16 @@ const HeroSection = () => {
 
       <div className="container mx-auto px-6 pt-28 pb-20 relative z-10">
         <div className="max-w-5xl mx-auto text-center">
+          {/* HUD badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="mb-8"
+            className="mb-8 flex items-center justify-center gap-2"
           >
-            <span className="badge-enterprise">Enterprise Trading Infrastructure</span>
+            <Crosshair className="w-3 h-3 text-primary animate-pulse-soft" />
+            <span className="badge-enterprise">Command Center // Active</span>
+            <Crosshair className="w-3 h-3 text-primary animate-pulse-soft" />
           </motion.div>
 
           <motion.h1
@@ -87,21 +102,21 @@ const HeroSection = () => {
             <motion.button
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
-              className="btn-primary-enterprise px-8 py-3.5 rounded-xl flex items-center gap-2"
+              className="btn-primary-enterprise px-8 py-3.5 rounded-lg flex items-center gap-2"
             >
-              Start Trading
+              Deploy Now
               <ArrowRight className="w-4 h-4" />
             </motion.button>
             <motion.button
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
-              className="btn-outline-enterprise px-8 py-3.5 rounded-xl"
+              className="btn-outline-enterprise px-8 py-3.5 rounded-lg"
             >
-              View Platform
+              Intel Brief
             </motion.button>
           </motion.div>
 
-          {/* Stats Cards */}
+          {/* Stats — HUD panels */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -119,12 +134,13 @@ const HeroSection = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.9 + i * 0.1 }}
-                whileHover={{ y: -4, borderColor: "hsl(175 50% 48% / 0.3)" }}
-                className="card-enterprise p-6 text-center"
+                whileHover={{ y: -4, borderColor: "hsl(24 75% 50% / 0.3)" }}
+                className="card-enterprise p-6 text-center relative hud-corners"
+                style={{ borderColor: "hsl(24 75% 50% / 0.15)" }}
               >
                 <stat.icon className="w-5 h-5 text-primary mx-auto mb-3" />
                 <div className="stat-value mb-1">{stat.value}</div>
-                <div className="text-xs text-muted-foreground font-medium tracking-wide">{stat.label}</div>
+                <div className="text-xs text-muted-foreground font-mono tracking-wider uppercase">{stat.label}</div>
               </motion.div>
             ))}
           </motion.div>
