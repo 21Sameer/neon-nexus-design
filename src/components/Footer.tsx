@@ -1,25 +1,27 @@
-import { Bot } from "lucide-react";
+import { Hexagon } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="border-t border-border/50 py-10">
-      <div className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-        <div className="flex items-center gap-2">
-          <Bot className="w-4 h-4 text-primary" />
-          <span className="font-mono text-xs text-muted-foreground tracking-widest">
-            BYTEBOOM NETWORK © 2025
-          </span>
-        </div>
-        <div className="flex gap-6">
-          {["Protocol", "Docs", "Status", "Contact"].map((link) => (
-            <a
-              key={link}
-              href="#"
-              className="font-mono text-xs text-muted-foreground hover:text-primary transition-colors tracking-wider"
-            >
-              {link}
-            </a>
-          ))}
+    <footer className="border-t border-border/40 py-12">
+      <div className="container mx-auto px-6">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-3">
+            <Hexagon className="w-4 h-4 text-primary" />
+            <span className="text-sm text-muted-foreground">
+              ByteBoom Capital &copy; {new Date().getFullYear()}
+            </span>
+          </div>
+          <div className="flex gap-8">
+            {["Platform", "Documentation", "Status", "Contact"].map((link) => (
+              <a
+                key={link}
+                href="#"
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-300"
+              >
+                {link}
+              </a>
+            ))}
+          </div>
         </div>
       </div>
     </footer>
