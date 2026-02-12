@@ -14,9 +14,13 @@ const Navbar = () => {
     >
       <div className="container mx-auto flex items-center justify-between h-16 px-6">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center">
+          <motion.div
+            whileHover={{ rotate: 30 }}
+            transition={{ duration: 0.4 }}
+            className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center"
+          >
             <Hexagon className="w-5 h-5 text-primary" />
-          </div>
+          </motion.div>
           <div>
             <span className="font-bold text-foreground tracking-wide text-sm">BYTEBOOM</span>
             <span className="block text-[10px] font-mono text-muted-foreground tracking-[0.2em]">CAPITAL</span>
@@ -25,13 +29,14 @@ const Navbar = () => {
 
         <div className="hidden md:flex items-center gap-8">
           {["Platform", "Solutions", "About", "Docs"].map((item) => (
-            <a
+            <motion.a
               key={item}
               href="#"
+              whileHover={{ y: -1 }}
               className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-300"
             >
               {item}
-            </a>
+            </motion.a>
           ))}
         </div>
 
@@ -39,9 +44,14 @@ const Navbar = () => {
           <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
             Sign in
           </a>
-          <a href="#" className="btn-primary-enterprise px-5 py-2 rounded-lg text-xs">
+          <motion.a
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            href="#"
+            className="btn-primary-enterprise px-5 py-2 rounded-lg text-xs"
+          >
             Get Started
-          </a>
+          </motion.a>
         </div>
 
         <button onClick={() => setOpen(!open)} className="md:hidden text-muted-foreground">
