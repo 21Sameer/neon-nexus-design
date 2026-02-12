@@ -43,7 +43,7 @@ const StepsSection = () => {
           <span className="badge-enterprise mb-4 inline-block">How It Works</span>
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mt-4">
             From onboarding to{" "}
-            <span className="text-gradient-warm">full automation</span>
+            <span className="text-primary">full automation</span>
           </h2>
           <p className="text-muted-foreground mt-4 max-w-lg mx-auto">
             A streamlined process designed to get you operational in minutes, not days.
@@ -57,13 +57,17 @@ const StepsSection = () => {
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
+              transition={{ duration: 0.5, delay: i * 0.15 }}
+              whileHover={{ y: -6, transition: { duration: 0.3 } }}
               className="card-highlight p-7 group"
             >
               <div className="flex items-center justify-between mb-6">
-                <div className="w-12 h-12 rounded-xl bg-primary/8 flex items-center justify-center group-hover:bg-primary/12 transition-colors">
+                <motion.div
+                  whileHover={{ rotate: 8, scale: 1.1 }}
+                  className="w-12 h-12 rounded-xl bg-primary/8 flex items-center justify-center group-hover:bg-primary/12 transition-colors"
+                >
                   <step.icon className="w-5 h-5 text-primary" />
-                </div>
+                </motion.div>
                 <span className="font-mono text-3xl font-bold text-muted/60">{step.step}</span>
               </div>
 
@@ -74,7 +78,7 @@ const StepsSection = () => {
                   whileInView={{ width: "100%" }}
                   viewport={{ once: true }}
                   transition={{ duration: 1.5, delay: 0.3 + i * 0.2 }}
-                  className="h-full rounded-full bg-gradient-to-r from-primary to-accent"
+                  className="h-full rounded-full bg-primary"
                 />
               </div>
 

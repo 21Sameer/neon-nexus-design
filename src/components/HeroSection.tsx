@@ -1,11 +1,50 @@
 import { motion } from "framer-motion";
 import { ArrowRight, BarChart3, Shield, TrendingUp, Globe } from "lucide-react";
 
+const floatingChars = [
+  { char: "₿", x: "8%", y: "15%", size: "text-6xl", delay: 0, duration: 10 },
+  { char: "Ξ", x: "85%", y: "20%", size: "text-5xl", delay: 2, duration: 14 },
+  { char: "◈", x: "12%", y: "65%", size: "text-4xl", delay: 1, duration: 11 },
+  { char: "⟐", x: "90%", y: "55%", size: "text-7xl", delay: 3, duration: 13 },
+  { char: "⬡", x: "25%", y: "25%", size: "text-3xl", delay: 0.5, duration: 9 },
+  { char: "◇", x: "78%", y: "70%", size: "text-5xl", delay: 1.5, duration: 12 },
+  { char: "△", x: "50%", y: "80%", size: "text-4xl", delay: 2.5, duration: 10 },
+  { char: "⊕", x: "65%", y: "12%", size: "text-3xl", delay: 3.5, duration: 15 },
+  { char: "$", x: "35%", y: "75%", size: "text-6xl", delay: 0.8, duration: 11 },
+  { char: "¥", x: "72%", y: "40%", size: "text-4xl", delay: 1.8, duration: 13 },
+];
+
 const HeroSection = () => {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
       <div className="absolute inset-0 bg-grid-subtle" />
       <div className="absolute inset-0 bg-radial-warm" />
+
+      {/* Floating characters behind the headline */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {floatingChars.map((item, i) => (
+          <motion.span
+            key={i}
+            className={`absolute ${item.size} font-mono text-primary/[0.06] select-none`}
+            style={{ left: item.x, top: item.y }}
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{
+              opacity: [0.04, 0.12, 0.04],
+              scale: [0.8, 1.1, 0.8],
+              y: [0, -30, 0],
+              rotate: [0, 10, -10, 0],
+            }}
+            transition={{
+              duration: item.duration,
+              delay: item.delay,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          >
+            {item.char}
+          </motion.span>
+        ))}
+      </div>
 
       <div className="container mx-auto px-6 pt-28 pb-20 relative z-10">
         <div className="max-w-5xl mx-auto text-center">
@@ -26,7 +65,7 @@ const HeroSection = () => {
           >
             <span className="text-foreground">Precision capital</span>
             <br />
-            <span className="text-gradient-warm">at institutional scale.</span>
+            <span className="text-primary">at institutional scale.</span>
           </motion.h1>
 
           <motion.p
@@ -45,13 +84,21 @@ const HeroSection = () => {
             transition={{ delay: 0.6 }}
             className="flex flex-wrap justify-center gap-4 mb-20"
           >
-            <button className="btn-primary-enterprise px-8 py-3.5 rounded-xl flex items-center gap-2">
+            <motion.button
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className="btn-primary-enterprise px-8 py-3.5 rounded-xl flex items-center gap-2"
+            >
               Start Trading
               <ArrowRight className="w-4 h-4" />
-            </button>
-            <button className="btn-outline-enterprise px-8 py-3.5 rounded-xl">
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className="btn-outline-enterprise px-8 py-3.5 rounded-xl"
+            >
               View Platform
-            </button>
+            </motion.button>
           </motion.div>
 
           {/* Stats Cards */}
@@ -72,6 +119,7 @@ const HeroSection = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.9 + i * 0.1 }}
+                whileHover={{ y: -4, borderColor: "hsl(175 50% 48% / 0.3)" }}
                 className="card-enterprise p-6 text-center"
               >
                 <stat.icon className="w-5 h-5 text-primary mx-auto mb-3" />

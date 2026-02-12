@@ -19,7 +19,7 @@ const CTASection = () => {
           <h2 className="text-4xl md:text-5xl font-bold mb-6 mt-4">
             <span className="text-foreground">Professional execution.</span>
             <br />
-            <span className="text-gradient-warm">Built for performance.</span>
+            <span className="text-primary">Built for performance.</span>
           </h2>
 
           <p className="text-muted-foreground text-lg mb-4 max-w-xl mx-auto">
@@ -58,6 +58,7 @@ const CTASection = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.5 + i * 0.1 }}
+              whileHover={{ y: -3 }}
               className="card-glass px-6 py-4 flex items-center gap-3"
             >
               <badge.icon className="w-4 h-4 text-primary" />
