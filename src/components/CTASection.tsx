@@ -1,10 +1,11 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Lock, ShieldCheck, Server } from "lucide-react";
+import { ArrowRight, Lock, ShieldCheck, Server, Target } from "lucide-react";
 
 const CTASection = () => {
   return (
     <section className="relative py-28 overflow-hidden">
       <div className="absolute inset-0 bg-radial-warm opacity-60" />
+      <div className="absolute inset-0 animated-grid opacity-30" />
 
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
@@ -14,7 +15,10 @@ const CTASection = () => {
           transition={{ duration: 0.7 }}
           className="max-w-3xl mx-auto text-center"
         >
-          <span className="badge-enterprise mb-6 inline-block">Ready to Deploy</span>
+          <div className="flex items-center justify-center gap-2 mb-6">
+            <Target className="w-3 h-3 text-primary animate-pulse-soft" />
+            <span className="badge-enterprise">Mission Ready</span>
+          </div>
 
           <h2 className="text-4xl md:text-5xl font-bold mb-6 mt-4">
             <span className="text-foreground">Professional execution.</span>
@@ -32,9 +36,9 @@ const CTASection = () => {
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="btn-primary-enterprise px-10 py-4 rounded-xl flex items-center gap-3 mx-auto"
+            className="btn-primary-enterprise px-10 py-4 rounded-lg flex items-center gap-3 mx-auto"
           >
-            Get Started Now
+            Initiate Deployment
             <ArrowRight className="w-4 h-4" />
           </motion.button>
         </motion.div>
@@ -59,10 +63,11 @@ const CTASection = () => {
               viewport={{ once: true }}
               transition={{ delay: 0.5 + i * 0.1 }}
               whileHover={{ y: -3 }}
-              className="card-glass px-6 py-4 flex items-center gap-3"
+              className="card-glass px-6 py-4 flex items-center gap-3 hud-corners"
+              style={{ borderColor: "hsl(24 75% 50% / 0.1)" }}
             >
               <badge.icon className="w-4 h-4 text-primary" />
-              <span className="text-sm text-muted-foreground font-medium">{badge.label}</span>
+              <span className="text-sm text-muted-foreground font-mono tracking-wider">{badge.label}</span>
             </motion.div>
           ))}
         </motion.div>

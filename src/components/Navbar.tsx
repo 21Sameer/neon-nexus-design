@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Hexagon, Menu } from "lucide-react";
+import { Hexagon, Menu, Radio } from "lucide-react";
 import { useState } from "react";
 
 const Navbar = () => {
@@ -17,13 +17,13 @@ const Navbar = () => {
           <motion.div
             whileHover={{ rotate: 30 }}
             transition={{ duration: 0.4 }}
-            className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center"
+            className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center"
           >
             <Hexagon className="w-5 h-5 text-primary" />
           </motion.div>
           <div>
-            <span className="font-bold text-foreground tracking-wide text-sm">BYTEBOOM</span>
-            <span className="block text-[10px] font-mono text-muted-foreground tracking-[0.2em]">CAPITAL</span>
+            <span className="font-bold text-foreground tracking-wider text-sm uppercase">BYTEBOOM</span>
+            <span className="block text-[10px] font-mono text-muted-foreground tracking-[0.2em]">COMMAND</span>
           </div>
         </div>
 
@@ -33,7 +33,7 @@ const Navbar = () => {
               key={item}
               href="#"
               whileHover={{ y: -1 }}
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-300"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-300 font-mono tracking-wide"
             >
               {item}
             </motion.a>
@@ -41,7 +41,11 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:flex items-center gap-3">
-          <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+          <div className="flex items-center gap-1.5 mr-3">
+            <Radio className="w-3 h-3 text-success animate-pulse-soft" />
+            <span className="font-mono text-[10px] text-success tracking-widest uppercase">Live</span>
+          </div>
+          <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors font-mono">
             Sign in
           </a>
           <motion.a
@@ -50,7 +54,7 @@ const Navbar = () => {
             href="#"
             className="btn-primary-enterprise px-5 py-2 rounded-lg text-xs"
           >
-            Get Started
+            Deploy
           </motion.a>
         </div>
 
@@ -67,12 +71,12 @@ const Navbar = () => {
         >
           <div className="container mx-auto px-6 py-4 flex flex-col gap-3">
             {["Platform", "Solutions", "About", "Docs"].map((item) => (
-              <a key={item} href="#" className="text-sm text-muted-foreground py-2">
+              <a key={item} href="#" className="text-sm text-muted-foreground py-2 font-mono">
                 {item}
               </a>
             ))}
             <a href="#" className="btn-primary-enterprise px-5 py-2.5 rounded-lg text-xs text-center mt-2">
-              Get Started
+              Deploy
             </a>
           </div>
         </motion.div>

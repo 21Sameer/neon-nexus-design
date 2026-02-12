@@ -7,8 +7,8 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
             <Hexagon className="w-4 h-4 text-primary" />
-            <span className="text-sm text-muted-foreground">
-              ByteBoom Capital &copy; {new Date().getFullYear()}
+            <span className="text-sm text-muted-foreground font-mono tracking-wider">
+              ByteBoom Command &copy; {new Date().getFullYear()}
             </span>
           </div>
           <div className="flex gap-8">
@@ -16,7 +16,7 @@ const Footer = () => {
               <a
                 key={link}
                 href="#"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-300"
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-300 font-mono tracking-wide"
               >
                 {link}
               </a>
