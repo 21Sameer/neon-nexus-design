@@ -18,80 +18,120 @@ const floatingChars = [
 const HeroSection = () => {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-background">
-      {/* === DEEP LAYERED BACKGROUND === */}
-      
-      {/* Layer 1: Far grid — large, slow, faint */}
-      <div className="absolute inset-0 animated-grid opacity-20" style={{ backgroundSize: '100px 100px', transform: 'scale(1.2)' }} />
-      
-      {/* Layer 2: Mid grid — tighter, faster */}
-      <div className="absolute inset-0 animated-grid opacity-10" style={{ backgroundSize: '40px 40px', animationDuration: '25s' }} />
+      {/* === FUTURISTIC BACKGROUND === */}
 
-      {/* Layer 3: Close grid — smallest, fastest, very subtle */}
-      <div className="absolute inset-0 animated-grid opacity-[0.04]" style={{ backgroundSize: '20px 20px', animationDuration: '12s' }} />
+      {/* Perspective grid floor — vanishing point */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute bottom-0 left-0 right-0 h-[60%]" style={{
+          background: `
+            linear-gradient(180deg, transparent 0%, hsl(var(--primary) / 0.03) 100%),
+            repeating-linear-gradient(90deg, hsl(var(--primary) / 0.06) 0px, transparent 1px, transparent 80px),
+            repeating-linear-gradient(0deg, hsl(var(--primary) / 0.04) 0px, transparent 1px, transparent 60px)
+          `,
+          transform: 'perspective(500px) rotateX(55deg)',
+          transformOrigin: 'bottom center',
+        }} />
+      </div>
 
-      {/* Radial depth vignette — strong dark edges, warm center glow */}
-      <div className="absolute inset-0" style={{
-        background: 'radial-gradient(ellipse 60% 50% at 50% 45%, hsl(var(--primary) / 0.06) 0%, transparent 50%), radial-gradient(ellipse at 50% 50%, transparent 30%, hsl(var(--background)) 100%)'
+      {/* Layer 1: Far grid — large, slow */}
+      <div className="absolute inset-0 animated-grid opacity-15" style={{ backgroundSize: '120px 120px', transform: 'scale(1.3)' }} />
+
+      {/* Layer 2: Mid grid — tighter */}
+      <div className="absolute inset-0 animated-grid opacity-[0.06]" style={{ backgroundSize: '40px 40px', animationDuration: '25s' }} />
+
+      {/* Hexagonal energy field overlay */}
+      <div className="absolute inset-0 opacity-[0.03]" style={{
+        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23c2651a' fill-opacity='0.4'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
       }} />
 
-      {/* Robot spotlight glow — warm light source from the left */}
+      {/* Central energy core glow */}
       <div className="absolute inset-0" style={{
-        background: 'radial-gradient(ellipse 40% 60% at 30% 50%, hsl(var(--primary) / 0.08) 0%, transparent 70%)'
+        background: `
+          radial-gradient(ellipse 50% 40% at 35% 50%, hsl(var(--primary) / 0.1) 0%, transparent 60%),
+          radial-gradient(ellipse 30% 50% at 70% 40%, hsl(210 65% 52% / 0.04) 0%, transparent 50%),
+          radial-gradient(ellipse at 50% 50%, transparent 30%, hsl(var(--background)) 100%)
+        `
       }} />
 
-      {/* Bottom fog / ground haze */}
-      <div className="absolute bottom-0 left-0 right-0 h-[50%]" style={{
-        background: 'linear-gradient(to top, hsl(var(--background)) 0%, hsl(var(--background) / 0.9) 20%, hsl(var(--background) / 0.4) 50%, transparent 100%)'
+      {/* Horizontal energy lines */}
+      {[25, 45, 65, 80].map((top, i) => (
+        <motion.div
+          key={`hline-${i}`}
+          className="absolute left-0 right-0 h-px pointer-events-none"
+          style={{ top: `${top}%` }}
+          animate={{ opacity: [0.02, 0.08, 0.02], scaleX: [0.8, 1, 0.8] }}
+          transition={{ duration: 4 + i * 2, repeat: Infinity, ease: "easeInOut", delay: i * 0.7 }}
+        >
+          <div className="w-full h-full" style={{
+            background: `linear-gradient(90deg, transparent 5%, hsl(var(--primary) / 0.15) 20%, hsl(var(--primary) / 0.3) 50%, hsl(var(--primary) / 0.15) 80%, transparent 95%)`
+          }} />
+        </motion.div>
+      ))}
+
+      {/* Vertical data streams */}
+      {[15, 35, 60, 82].map((left, i) => (
+        <motion.div
+          key={`vline-${i}`}
+          className="absolute top-0 bottom-0 w-px pointer-events-none"
+          style={{ left: `${left}%` }}
+          animate={{ opacity: [0, 0.06, 0] }}
+          transition={{ duration: 3 + i, repeat: Infinity, ease: "easeInOut", delay: i * 1.2 }}
+        >
+          <div className="w-full h-full" style={{
+            background: `linear-gradient(180deg, transparent 10%, hsl(var(--primary) / 0.2) 50%, transparent 90%)`
+          }} />
+        </motion.div>
+      ))}
+
+      {/* Bottom fog / ground haze — thicker */}
+      <div className="absolute bottom-0 left-0 right-0 h-[55%]" style={{
+        background: 'linear-gradient(to top, hsl(var(--background)) 0%, hsl(var(--background) / 0.95) 15%, hsl(var(--background) / 0.5) 45%, transparent 100%)'
       }} />
 
       {/* Top atmospheric darkening */}
-      <div className="absolute top-0 left-0 right-0 h-[35%]" style={{
-        background: 'linear-gradient(to bottom, hsl(var(--background) / 0.7) 0%, transparent 100%)'
-      }} />
-
-      {/* Horizontal depth line — ground plane illusion */}
-      <div className="absolute bottom-[30%] left-0 right-0 h-px opacity-10" style={{
-        background: 'linear-gradient(90deg, transparent 5%, hsl(var(--primary) / 0.5) 30%, hsl(var(--primary) / 0.8) 50%, hsl(var(--primary) / 0.5) 70%, transparent 95%)'
+      <div className="absolute top-0 left-0 right-0 h-[30%]" style={{
+        background: 'linear-gradient(to bottom, hsl(var(--background) / 0.8) 0%, transparent 100%)'
       }} />
 
       {/* HUD scanning line */}
       <div className="hud-scan-line" />
 
-      {/* Radar pulses — layered at different depths */}
-      <div className="absolute top-[18%] left-[12%] opacity-30">
+      {/* Radar pulses — layered */}
+      <div className="absolute top-[18%] left-[12%] opacity-25">
         <div className="radar-sweep" />
       </div>
-      <div className="absolute bottom-[22%] right-[18%] opacity-20">
+      <div className="absolute bottom-[22%] right-[18%] opacity-15">
         <div className="radar-sweep" style={{ animationDelay: "1.5s" }} />
       </div>
-      <div className="absolute top-[55%] left-[55%] opacity-10">
+      <div className="absolute top-[55%] left-[55%] opacity-[0.07]">
         <div className="radar-sweep" style={{ animationDelay: "3s", transform: 'scale(0.5)' }} />
       </div>
-      <div className="absolute top-[35%] right-[8%] opacity-15">
+      <div className="absolute top-[35%] right-[8%] opacity-10">
         <div className="radar-sweep" style={{ animationDelay: "2.2s", transform: 'scale(0.7)' }} />
       </div>
 
-      {/* Floating ambient particles */}
-      {[...Array(10)].map((_, i) => (
+      {/* Floating ambient particles — glowing orbs */}
+      {[...Array(14)].map((_, i) => (
         <motion.div
           key={`particle-${i}`}
-          className="absolute rounded-full"
+          className="absolute rounded-full pointer-events-none"
           style={{
-            width: `${2 + (i % 3) * 2}px`,
-            height: `${2 + (i % 3) * 2}px`,
-            background: i % 2 === 0 ? 'hsl(var(--primary) / 0.25)' : 'hsl(var(--foreground) / 0.1)',
-            left: `${8 + i * 9}%`,
-            top: `${15 + (i % 4) * 20}%`,
+            width: `${2 + (i % 4) * 2}px`,
+            height: `${2 + (i % 4) * 2}px`,
+            background: i % 3 === 0 ? 'hsl(var(--primary) / 0.4)' : i % 3 === 1 ? 'hsl(210 65% 52% / 0.2)' : 'hsl(var(--foreground) / 0.12)',
+            boxShadow: i % 3 === 0 ? '0 0 8px hsl(var(--primary) / 0.3)' : 'none',
+            left: `${5 + i * 6.5}%`,
+            top: `${12 + (i % 5) * 18}%`,
           }}
           animate={{
-            y: [0, -50 - i * 5, 0],
-            x: [0, (i % 2 === 0 ? 15 : -15), 0],
-            opacity: [0.05, 0.35, 0.05],
-            scale: [1, 1.8, 1],
+            y: [0, -40 - i * 4, 0],
+            x: [0, (i % 2 === 0 ? 20 : -20), 0],
+            opacity: [0.03, 0.4, 0.03],
+            scale: [1, 2, 1],
           }}
           transition={{
-            duration: 5 + i * 1.5,
-            delay: i * 0.6,
+            duration: 4 + i * 1.2,
+            delay: i * 0.5,
             repeat: Infinity,
             ease: "easeInOut",
           }}
