@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowRight, BarChart3, Shield, TrendingUp, Globe, Crosshair } from "lucide-react";
+import heroRobot from "@/assets/hero-robot.png";
 
 const floatingChars = [
   { char: "₿", x: "8%", y: "15%", size: "text-6xl", delay: 0, duration: 10 },
@@ -17,59 +18,80 @@ const floatingChars = [
 const HeroSection = () => {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-background">
-      {/* Deep layered background for 3D depth */}
-      {/* Layer 1: Farthest — large soft grid */}
-      <div className="absolute inset-0 animated-grid opacity-30" style={{ backgroundSize: '80px 80px', transform: 'scale(1.1)' }} />
+      {/* === DEEP LAYERED BACKGROUND === */}
       
-      {/* Layer 2: Mid — tighter grid with parallax offset */}
-      <div className="absolute inset-0 animated-grid opacity-15" style={{ backgroundSize: '40px 40px', animationDuration: '30s' }} />
+      {/* Layer 1: Far grid — large, slow, faint */}
+      <div className="absolute inset-0 animated-grid opacity-20" style={{ backgroundSize: '100px 100px', transform: 'scale(1.2)' }} />
+      
+      {/* Layer 2: Mid grid — tighter, faster */}
+      <div className="absolute inset-0 animated-grid opacity-10" style={{ backgroundSize: '40px 40px', animationDuration: '25s' }} />
 
-      {/* Layer 3: Radial depth vignette — dark edges, subtle center glow */}
+      {/* Layer 3: Close grid — smallest, fastest, very subtle */}
+      <div className="absolute inset-0 animated-grid opacity-[0.04]" style={{ backgroundSize: '20px 20px', animationDuration: '12s' }} />
+
+      {/* Radial depth vignette — strong dark edges, warm center glow */}
       <div className="absolute inset-0" style={{
-        background: 'radial-gradient(ellipse 70% 60% at 50% 50%, hsl(var(--primary) / 0.04) 0%, transparent 50%), radial-gradient(ellipse at 50% 50%, transparent 40%, hsl(var(--background)) 100%)'
+        background: 'radial-gradient(ellipse 60% 50% at 50% 45%, hsl(var(--primary) / 0.06) 0%, transparent 50%), radial-gradient(ellipse at 50% 50%, transparent 30%, hsl(var(--background)) 100%)'
       }} />
 
-      {/* Layer 4: Bottom fog / ground haze */}
-      <div className="absolute bottom-0 left-0 right-0 h-[40%]" style={{
-        background: 'linear-gradient(to top, hsl(var(--background)) 0%, hsl(var(--background) / 0.8) 30%, transparent 100%)'
+      {/* Robot spotlight glow — warm light source from the left */}
+      <div className="absolute inset-0" style={{
+        background: 'radial-gradient(ellipse 40% 60% at 30% 50%, hsl(var(--primary) / 0.08) 0%, transparent 70%)'
       }} />
 
-      {/* Layer 5: Top darkening */}
-      <div className="absolute top-0 left-0 right-0 h-[30%]" style={{
-        background: 'linear-gradient(to bottom, hsl(var(--background) / 0.6) 0%, transparent 100%)'
+      {/* Bottom fog / ground haze */}
+      <div className="absolute bottom-0 left-0 right-0 h-[50%]" style={{
+        background: 'linear-gradient(to top, hsl(var(--background)) 0%, hsl(var(--background) / 0.9) 20%, hsl(var(--background) / 0.4) 50%, transparent 100%)'
+      }} />
+
+      {/* Top atmospheric darkening */}
+      <div className="absolute top-0 left-0 right-0 h-[35%]" style={{
+        background: 'linear-gradient(to bottom, hsl(var(--background) / 0.7) 0%, transparent 100%)'
+      }} />
+
+      {/* Horizontal depth line — ground plane illusion */}
+      <div className="absolute bottom-[30%] left-0 right-0 h-px opacity-10" style={{
+        background: 'linear-gradient(90deg, transparent 5%, hsl(var(--primary) / 0.5) 30%, hsl(var(--primary) / 0.8) 50%, hsl(var(--primary) / 0.5) 70%, transparent 95%)'
       }} />
 
       {/* HUD scanning line */}
       <div className="hud-scan-line" />
 
-      {/* Radar pulses — repositioned for depth */}
-      <div className="absolute top-[20%] left-[15%] opacity-40">
+      {/* Radar pulses — layered at different depths */}
+      <div className="absolute top-[18%] left-[12%] opacity-30">
         <div className="radar-sweep" />
       </div>
-      <div className="absolute bottom-[25%] right-[20%] opacity-30">
+      <div className="absolute bottom-[22%] right-[18%] opacity-20">
         <div className="radar-sweep" style={{ animationDelay: "1.5s" }} />
       </div>
-      <div className="absolute top-[60%] left-[60%] opacity-20">
-        <div className="radar-sweep" style={{ animationDelay: "3s", transform: 'scale(0.6)' }} />
+      <div className="absolute top-[55%] left-[55%] opacity-10">
+        <div className="radar-sweep" style={{ animationDelay: "3s", transform: 'scale(0.5)' }} />
+      </div>
+      <div className="absolute top-[35%] right-[8%] opacity-15">
+        <div className="radar-sweep" style={{ animationDelay: "2.2s", transform: 'scale(0.7)' }} />
       </div>
 
       {/* Floating ambient particles */}
-      {[...Array(6)].map((_, i) => (
+      {[...Array(10)].map((_, i) => (
         <motion.div
           key={`particle-${i}`}
-          className="absolute w-1 h-1 rounded-full bg-primary/20"
+          className="absolute rounded-full"
           style={{
-            left: `${15 + i * 15}%`,
-            top: `${20 + (i % 3) * 25}%`,
+            width: `${2 + (i % 3) * 2}px`,
+            height: `${2 + (i % 3) * 2}px`,
+            background: i % 2 === 0 ? 'hsl(var(--primary) / 0.25)' : 'hsl(var(--foreground) / 0.1)',
+            left: `${8 + i * 9}%`,
+            top: `${15 + (i % 4) * 20}%`,
           }}
           animate={{
-            y: [0, -40, 0],
-            opacity: [0.1, 0.4, 0.1],
-            scale: [1, 1.5, 1],
+            y: [0, -50 - i * 5, 0],
+            x: [0, (i % 2 === 0 ? 15 : -15), 0],
+            opacity: [0.05, 0.35, 0.05],
+            scale: [1, 1.8, 1],
           }}
           transition={{
-            duration: 6 + i * 2,
-            delay: i * 0.8,
+            duration: 5 + i * 1.5,
+            delay: i * 0.6,
             repeat: Infinity,
             ease: "easeInOut",
           }}
@@ -81,11 +103,11 @@ const HeroSection = () => {
         {floatingChars.map((item, i) => (
           <motion.span
             key={i}
-            className={`absolute ${item.size} font-mono text-primary/[0.05] select-none`}
+            className={`absolute ${item.size} font-mono text-primary/[0.04] select-none`}
             style={{ left: item.x, top: item.y }}
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{
-              opacity: [0.03, 0.1, 0.03],
+              opacity: [0.02, 0.08, 0.02],
               scale: [0.8, 1.1, 0.8],
               y: [0, -30, 0],
               rotate: [0, 10, -10, 0],
@@ -102,92 +124,148 @@ const HeroSection = () => {
         ))}
       </div>
 
+      {/* === MAIN CONTENT — Split Layout === */}
       <div className="container mx-auto px-6 pt-28 pb-20 relative z-10">
-        <div className="max-w-5xl mx-auto text-center">
-          {/* HUD badge */}
+        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-8">
+          
+          {/* LEFT — Robot with 3D depth */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="mb-8 flex items-center justify-center gap-2"
+            initial={{ opacity: 0, x: -60, scale: 0.9 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            transition={{ delay: 0.3, duration: 1, ease: "easeOut" }}
+            className="relative w-full lg:w-1/2 flex justify-center"
           >
-            <Crosshair className="w-3 h-3 text-primary animate-pulse-soft" />
-            <span className="badge-enterprise">Command Center // Active</span>
-            <Crosshair className="w-3 h-3 text-primary animate-pulse-soft" />
+            {/* Glow behind robot */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div className="w-[70%] h-[70%] rounded-full opacity-30" style={{
+                background: 'radial-gradient(circle, hsl(var(--primary) / 0.2) 0%, transparent 70%)',
+                filter: 'blur(40px)',
+              }} />
+            </div>
+            
+            {/* Robot shadow on ground */}
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[60%] h-8 rounded-full opacity-20" style={{
+              background: 'radial-gradient(ellipse, hsl(var(--primary) / 0.4) 0%, transparent 70%)',
+              filter: 'blur(12px)',
+            }} />
+
+            <motion.img
+              src={heroRobot}
+              alt="ByteBoom Trading AI"
+              className="relative z-10 w-[80%] max-w-[500px] drop-shadow-2xl"
+              animate={{
+                y: [0, -12, 0],
+                rotateY: [0, 3, 0, -3, 0],
+              }}
+              transition={{
+                duration: 6,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              style={{
+                filter: 'drop-shadow(0 20px 40px hsl(var(--primary) / 0.15))',
+              }}
+            />
+
+            {/* Orbiting rings */}
+            <motion.div
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85%] aspect-square rounded-full border border-primary/10 pointer-events-none"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            />
+            <motion.div
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] aspect-square rounded-full border border-primary/[0.04] pointer-events-none"
+              animate={{ rotate: -360 }}
+              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+            />
           </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.7 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-extrabold leading-[1.02] mb-8"
-          >
-            <span className="text-foreground">Precision capital</span>
-            <br />
-            <span className="text-primary">at institutional scale.</span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            className="text-muted-foreground text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-12"
-          >
-            A high-performance network powering global capital markets. 
-            Automated liquidity bridging engineered for professional market participants.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
-            className="flex flex-wrap justify-center gap-4 mb-20"
-          >
-            <motion.button
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              className="btn-primary-enterprise px-8 py-3.5 rounded-lg flex items-center gap-2"
+          {/* RIGHT — Text Content */}
+          <div className="w-full lg:w-1/2 text-center lg:text-left">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="mb-6 flex items-center justify-center lg:justify-start gap-2"
             >
-              Deploy Now
-              <ArrowRight className="w-4 h-4" />
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              className="btn-outline-enterprise px-8 py-3.5 rounded-lg"
-            >
-              Intel Brief
-            </motion.button>
-          </motion.div>
+              <Crosshair className="w-3 h-3 text-primary animate-pulse-soft" />
+              <span className="badge-enterprise">Command Center // Active</span>
+              <Crosshair className="w-3 h-3 text-primary animate-pulse-soft" />
+            </motion.div>
 
-          {/* Stats — HUD panels */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.7 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-4"
-          >
-            {[
-              { icon: BarChart3, value: "$2.4B+", label: "Volume Processed" },
-              { icon: TrendingUp, value: "10K+/s", label: "Throughput" },
-              { icon: Shield, value: "99.99%", label: "Uptime SLA" },
-              { icon: Globe, value: "140+", label: "Countries" },
-            ].map((stat, i) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.9 + i * 0.1 }}
-                whileHover={{ y: -4, borderColor: "hsl(24 75% 50% / 0.3)" }}
-                className="card-enterprise p-6 text-center relative hud-corners"
-                style={{ borderColor: "hsl(24 75% 50% / 0.15)" }}
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.7 }}
+              className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-[1.05] mb-6"
+            >
+              <span className="text-foreground">The Market Never Sleeps.</span>
+              <br />
+              <span className="text-primary">Neither Does ByteBoom.</span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+              className="text-muted-foreground text-base md:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0 mb-10"
+            >
+              A high-performance network powering global capital markets.
+              Automated liquidity bridging engineered for professional market participants.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7 }}
+              className="flex flex-wrap justify-center lg:justify-start gap-4 mb-14"
+            >
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="btn-primary-enterprise px-8 py-3.5 rounded-lg flex items-center gap-2"
               >
-                <stat.icon className="w-5 h-5 text-primary mx-auto mb-3" />
-                <div className="stat-value mb-1">{stat.value}</div>
-                <div className="text-xs text-muted-foreground font-mono tracking-wider uppercase">{stat.label}</div>
-              </motion.div>
-            ))}
-          </motion.div>
+                Deploy Now
+                <ArrowRight className="w-4 h-4" />
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="btn-outline-enterprise px-8 py-3.5 rounded-lg"
+              >
+                Intel Brief
+              </motion.button>
+            </motion.div>
+
+            {/* Stats */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.9, duration: 0.7 }}
+              className="grid grid-cols-2 gap-4"
+            >
+              {[
+                { icon: BarChart3, value: "$2.4B+", label: "Volume" },
+                { icon: TrendingUp, value: "10K+/s", label: "Throughput" },
+                { icon: Shield, value: "99.99%", label: "Uptime" },
+                { icon: Globe, value: "140+", label: "Countries" },
+              ].map((stat, i) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1.0 + i * 0.1 }}
+                  whileHover={{ y: -3, borderColor: "hsl(24 75% 50% / 0.3)" }}
+                  className="card-enterprise p-4 text-center relative hud-corners"
+                  style={{ borderColor: "hsl(24 75% 50% / 0.15)" }}
+                >
+                  <stat.icon className="w-4 h-4 text-primary mx-auto mb-2" />
+                  <div className="stat-value text-lg mb-0.5">{stat.value}</div>
+                  <div className="text-[10px] text-muted-foreground font-mono tracking-wider uppercase">{stat.label}</div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>
