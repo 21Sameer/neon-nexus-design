@@ -16,21 +16,65 @@ const floatingChars = [
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Animated grid overlay */}
-      <div className="absolute inset-0 animated-grid" />
-      <div className="absolute inset-0 bg-radial-warm" />
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-background">
+      {/* Deep layered background for 3D depth */}
+      {/* Layer 1: Farthest — large soft grid */}
+      <div className="absolute inset-0 animated-grid opacity-30" style={{ backgroundSize: '80px 80px', transform: 'scale(1.1)' }} />
+      
+      {/* Layer 2: Mid — tighter grid with parallax offset */}
+      <div className="absolute inset-0 animated-grid opacity-15" style={{ backgroundSize: '40px 40px', animationDuration: '30s' }} />
+
+      {/* Layer 3: Radial depth vignette — dark edges, subtle center glow */}
+      <div className="absolute inset-0" style={{
+        background: 'radial-gradient(ellipse 70% 60% at 50% 50%, hsl(var(--primary) / 0.04) 0%, transparent 50%), radial-gradient(ellipse at 50% 50%, transparent 40%, hsl(var(--background)) 100%)'
+      }} />
+
+      {/* Layer 4: Bottom fog / ground haze */}
+      <div className="absolute bottom-0 left-0 right-0 h-[40%]" style={{
+        background: 'linear-gradient(to top, hsl(var(--background)) 0%, hsl(var(--background) / 0.8) 30%, transparent 100%)'
+      }} />
+
+      {/* Layer 5: Top darkening */}
+      <div className="absolute top-0 left-0 right-0 h-[30%]" style={{
+        background: 'linear-gradient(to bottom, hsl(var(--background) / 0.6) 0%, transparent 100%)'
+      }} />
 
       {/* HUD scanning line */}
       <div className="hud-scan-line" />
 
-      {/* Radar pulses */}
-      <div className="absolute top-1/4 left-1/4">
+      {/* Radar pulses — repositioned for depth */}
+      <div className="absolute top-[20%] left-[15%] opacity-40">
         <div className="radar-sweep" />
       </div>
-      <div className="absolute bottom-1/3 right-1/4">
+      <div className="absolute bottom-[25%] right-[20%] opacity-30">
         <div className="radar-sweep" style={{ animationDelay: "1.5s" }} />
       </div>
+      <div className="absolute top-[60%] left-[60%] opacity-20">
+        <div className="radar-sweep" style={{ animationDelay: "3s", transform: 'scale(0.6)' }} />
+      </div>
+
+      {/* Floating ambient particles */}
+      {[...Array(6)].map((_, i) => (
+        <motion.div
+          key={`particle-${i}`}
+          className="absolute w-1 h-1 rounded-full bg-primary/20"
+          style={{
+            left: `${15 + i * 15}%`,
+            top: `${20 + (i % 3) * 25}%`,
+          }}
+          animate={{
+            y: [0, -40, 0],
+            opacity: [0.1, 0.4, 0.1],
+            scale: [1, 1.5, 1],
+          }}
+          transition={{
+            duration: 6 + i * 2,
+            delay: i * 0.8,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
 
       {/* Floating characters */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
